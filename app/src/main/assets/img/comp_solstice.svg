@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+<defs><filter id="s"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#26372e" flood-opacity=".20"/></filter><radialGradient id="g"><stop offset="0" stop-color="#d59a32" stop-opacity=".26"/><stop offset="1" stop-color="#d59a32" stop-opacity="0"/></radialGradient></defs>
+<circle cx="64" cy="66" r="57" fill="url(#g)"/><circle cx="64" cy="64" r="57" fill="none" stroke="#d59a32" stroke-opacity=".58" stroke-width="2.5"/><g filter="url(#s)"><path d="M62 30 Q74 15 82 29 Q87 39 77 47 Q93 44 100 55 Q91 67 77 65 Q86 78 78 92 Q66 88 62 76 Q57 91 43 94 Q35 80 46 68 Q31 68 24 56 Q34 44 48 48 Q40 35 48 26 Q57 18 62 30Z" fill="#e7a856"/>
+<ellipse cx="62" cy="70" rx="19" ry="25" fill="#f2c66f"/><circle cx="62" cy="51" r="17" fill="#f4d58a"/>
+<circle cx="55" cy="55" r="3.1" fill="#27332f"/><circle cx="69" cy="55" r="3.1" fill="#27332f"/><circle cx="54" cy="54" r="1" fill="#fff"/><circle cx="68" cy="54" r="1" fill="#fff"/><path d="M58 64 Q62 67 66 64" stroke="#6d5744" stroke-width="2" fill="none" stroke-linecap="round"/>
+<path d="M54 94 Q62 112 70 94 Q75 108 85 108 Q78 121 62 119 Q46 121 39 108 Q49 108 54 94Z" fill="#d97547"/>
+<path d="M62 98 Q66 109 62 115 Q58 109 62 98Z" fill="#ffe09a"/></g></svg>

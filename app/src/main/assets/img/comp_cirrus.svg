@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+<defs>
+  <filter id="s"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#26372e" flood-opacity=".18"/></filter>
+  <radialGradient id="g"><stop offset="0" stop-color="#72a776" stop-opacity=".20"/><stop offset="1" stop-color="#72a776" stop-opacity="0"/></radialGradient>
+</defs>
+<circle cx="64" cy="66" r="57" fill="url(#g)"/>
+<circle cx="64" cy="64" r="57" fill="none" stroke="#72a776" stroke-opacity=".38" stroke-width="1.5"/>
+<g filter="url(#s)">
+<circle cx="47" cy="82" r="14" fill="#cfe0ea"/><circle cx="62" cy="74" r="16" fill="#dce7e4"/><circle cx="80" cy="81" r="15" fill="#cfe0ea"/><circle cx="62" cy="91" r="18" fill="#dce7e4"/>
+<circle cx="62" cy="57" r="18" fill="#eef4f2"/>
+
+<circle cx="56" cy="57" r="3.2" fill="#27332f"/><circle cx="68" cy="57" r="3.2" fill="#27332f"/>
+<circle cx="55" cy="56" r="1" fill="#fff"/><circle cx="67" cy="56" r="1" fill="#fff"/>
+<path d="M58 66 Q62 68 66 66" stroke="#4e4d46" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+<path d="M53 108 v8 M70 108 v8" stroke="#b9c8c6" stroke-width="4" stroke-linecap="round"/>
+<path d="M88 96 Q97 79 106 87 Q102 98 88 100" fill="#d5e6ee"/>
+<path d="M91 95 L101 88" stroke="#9abac7" stroke-width="1.3"/>
+</g>
+</svg>

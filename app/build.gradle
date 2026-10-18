@@ -1,0 +1,90 @@
+import java.util.Properties
+
+plugins {
+    id 'com.android.application'
+}
+
+def signingProperties = new Properties()
+def signingPropertiesFile = rootProject.file('signing/keystore.properties')
+def hasReleaseSigning = signingPropertiesFile.exists()
+if (hasReleaseSigning) {
+    signingPropertiesFile.withInputStream { signingProperties.load(it) }
+}
+
+android {
+    namespace 'com.jasongolda.lumieresdepoche'
+    compileSdk 36
+
+    defaultConfig {
+        // Kept intentionally for update compatibility with every public build since v1.0.6.
+        applicationId 'com.jasongolda.lumieresdepoche'
+        minSdk 23
+        targetSdk 36
+        versionCode 133
+        versionName '4.0.0'
+
+        buildConfigField 'String', 'APP_DISPLAY_NAME', '"Luciole de poche"'
+    }
+
+
+    flavorDimensions += 'environment'
+    productFlavors {
+        store {
+            dimension 'environment'
+            buildConfigField 'boolean', 'LOCAL_TEST_MODE', 'false'
+            buildConfigField 'boolean', 'BILLING_ENABLED', 'false'
+        }
+        devLocal {
+            dimension 'environment'
+            buildConfigField 'boolean', 'LOCAL_TEST_MODE', 'false'
+            buildConfigField 'boolean', 'BILLING_ENABLED', 'false'
+            versionNameSuffix '-local'
+        }
+    }
+
+    signingConfigs {
+        if (hasReleaseSigning) {
+            release {
+                storeFile file(signingProperties['storeFile'])
+                storePassword signingProperties['storePassword']
+                keyAlias signingProperties['keyAlias']
+                keyPassword signingProperties['keyPassword']
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            // Signing is configured outside source control. Google Play should use the historical
+            // certificate as the app-signing key and a separate upload key for routine releases.
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    packaging {
+        resources {
+            excludes += ['/META-INF/{AL2.0,LGPL2.1}']
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.android.billingclient:billing:9.1.0'
+}

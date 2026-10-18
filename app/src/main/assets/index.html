@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' data:; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'">
+  <meta name="theme-color" content="#dff4df">
+  <title>Luciole de poche</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" id="v4CommercialStyles" href="v4-commercial-b120.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <button class="icon-button hidden" id="backBtn" aria-label="Retour">‹</button>
+      <div class="brand">
+        <img src="img/luciole.svg" alt="" class="brand-icon">
+        <div><strong>Luciole de poche</strong><small id="subtitle">Un refuge au bout du trajet</small></div>
+      </div>
+      <button class="icon-button topbar-image-button" id="optionsBtn" aria-label="Options"><img src="img/options.svg" alt=""></button>
+      <button class="icon-button sound-button" id="soundBtn" aria-label="Son"><span class="sound-note" aria-hidden="true">♪</span></button>
+    </header>
+
+    <main>
+      <section class="screen active" id="homeScreen">
+        <div class="hero-card">
+          <div class="sky-decor"><span></span><span></span><span></span></div>
+          <img src="img/hero.svg" class="hero-image" alt="Petit explorateur">
+          <div class="hero-copy">
+            <p class="eyebrow" id="greeting">Bonsoir, voyageur</p>
+            <h1>Ton petit refuge<br>continue de grandir.</h1>
+            <p id="offlineMessage">Les lucioles ont veillé pendant ton absence.</p>
+          </div>
+        </div>
+
+        <div class="home-save-status" id="activeSaveLabel">Partie 1 active</div>
+        <button class="primary big" id="exploreBtn">
+          <img src="img/map.svg" alt="">
+          <span><strong>Partir en balade</strong><small>Une expédition de 2 à 5 minutes</small></span>
+          <b>›</b>
+        </button>
+
+        <div class="section-title" id="dailySectionTitle"><h2>Aujourd’hui</h2><span id="streakLabel"></span></div>
+        <div class="daily-card" id="dailyCard"></div>
+
+        <div class="final-goal-section hidden" id="finalGoalSection">
+          <div class="section-title final-section-title"><h2>Au bout du chemin</h2><span>Objectif de fin</span></div>
+          <div class="final-goal-card" id="finalGoalCard"></div>
+        </div>
+
+        <div class="quick-grid">
+          <button class="menu-card" data-screen="refugeScreen"><img src="img/refuge.svg" alt=""><strong>Refuge</strong><small>Améliorer le camp</small></button>
+          <button class="menu-card" data-screen="journalScreen"><img src="img/carnet.svg" alt=""><strong>Carnet</strong><small>Collections et secrets</small></button>
+          <button class="menu-card trade-menu-card hidden" id="tradeMenuBtn" data-screen="tradeScreen"><img src="img/panier.svg" alt=""><strong>Troc</strong><small>Transformer les surplus</small></button>
+        </div>
+      </section>
+
+      <section class="screen" id="optionsScreen">
+        <div class="page-intro"><p class="eyebrow">Deux aventures, aucun sacrifice rituel</p><h1>Options</h1><p>Chaque partie possède sa propre progression. Changer de partie n’efface ni ne remplace l’autre sauvegarde.</p></div>
+        <div class="options-section">
+          <div class="section-title"><h2>Parties</h2><span>2 emplacements</span></div>
+          <div class="save-slots" id="saveSlots"></div>
+          <div class="walk-render-mode-option-row">
+            <div><strong>Mode visuel de test</strong><small id="walkRenderModeHint">Compare la présentation historique 2D et la nouvelle présentation 2.5D.</small></div>
+            <button id="walkRenderModeToggle" class="walk-render-mode-option" type="button" aria-label="Changer le mode visuel des balades"><span id="walkRenderModeToggleLabel">2.5D</span></button>
+          </div>
+          <div class="save-safety-note"><img src="img/carnet.svg" alt=""><div><strong>Sauvegardes séparées</strong><small>Ta Partie 1 historique est copiée automatiquement dans le premier emplacement lors de la mise à jour. La seconde commence avec zéro ressource. Chaque partie peut être réinitialisée indépendamment.</small></div></div>
+        </div>
+        <div class="options-section save-protection-section">
+          <div class="section-title"><h2>Protection des sauvegardes</h2><span id="saveHealthLabel">Sauvegarde locale</span></div>
+          <div class="save-tools-card">
+            <div>
+              <strong>Une copie que tu contrôles</strong>
+              <small>Exporte tes deux parties dans un fichier JSON et réimporte-les si nécessaire. Les Gemmes achetées ne font pas partie du fichier de sauvegarde.</small>
+            </div>
+            <div class="save-tools-actions">
+              <button class="secondary" id="exportSavesBtn">Exporter</button>
+              <button class="secondary" id="importSavesBtn">Importer</button>
+            </div>
+          </div>
+        </div>
+        <div class="options-section about-section">
+          <div class="section-title"><h2>À propos</h2><span id="appVersionLabel">Luciole de poche</span></div>
+          <div class="about-card">
+            <p><strong>Respect de la vie privée</strong></p>
+            <p>La progression et les balades fonctionnent hors ligne. Les sauvegardes restent sur ton appareil. Les achats de Gemmes, lorsqu’ils seront activés, utiliseront Google Play et une validation sécurisée du portefeuille acheté.</p>
+            <button class="secondary" id="privacyBtn">Lire la politique de confidentialité</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="mapScreen">
+        <div class="page-intro"><p class="eyebrow">Choisis un chemin</p><h1>Les environs</h1><p>Chaque balade peut évoluer jusqu’au niveau 4. Les chemins lointains sont plus vastes et plus riches</p></div>
+        <div id="regionList" class="region-list"></div>
+      </section>
+
+      <section class="screen expedition-screen" id="expeditionScreen">
+        <canvas id="gameCanvas"></canvas>
+
+        <div class="legacy-2d-expedition-ui" id="legacy2dExpeditionUi">
+          <div class="expedition-hud legacy-2d-expedition-hud">
+            <div class="hud-pill"><img src="img/sac.svg" alt=""><span id="legacyBagLabel">0 / 18</span></div>
+            <div class="hud-pill"><img src="img/luciole.svg" alt=""><span id="legacyLightLabel">100%</span></div>
+            <div class="hud-pill map-progress-pill"><img src="img/map.svg" alt=""><span id="legacyMapLabel">0%</span></div>
+            <button id="legacyRunNeedsBtn" class="run-needs-button hidden" type="button" aria-label="Voir les ressources nécessaires aux évolutions"><img src="img/carnet.svg" alt=""><span>Besoins</span></button>
+          </div>
+          <div class="expedition-bottom legacy-2d-expedition-bottom">
+            <div class="mini-inventory" id="legacyRunInventory"></div>
+            <button id="legacyReturnBtn" class="return-button" type="button">⌂ Retour au refuge</button>
+          </div>
+        </div>
+
+        <div class="expedition-hud commercial-expedition-hud">
+          <div class="commercial-minimap map-progress-pill" id="runMapHud" aria-label="Carte éclairée">
+            <canvas id="runMiniMap" width="132" height="132"></canvas>
+            <img class="commercial-minimap-frame" src="img/v4b114/ui_minimap_frame.png" alt="">
+            <span class="commercial-map-percent" id="mapLabel">0%</span>
+          </div>
+
+          <div class="commercial-light-hud" id="runLightHud">
+            <div class="commercial-light-title"><span>Lumière</span><strong id="lightLabel">100%</strong></div>
+            <div class="commercial-light-track"><i id="commercialLightFill"></i></div>
+          </div>
+
+          <button class="commercial-pause-button" id="runPauseBtn" type="button" aria-label="Mettre la balade en pause">
+            <img src="img/v4b114/ui_pause.png" alt="">
+          </button>
+        </div>
+
+        <aside class="commercial-resource-rail" aria-label="Ressources ramassées">
+          <img class="commercial-resource-frame" src="img/v4b114/ui_resource_panel_frame.png" alt="">
+          <div class="mini-inventory" id="runInventory"></div>
+        </aside>
+
+        <div class="commercial-bag-hud" id="runBagHud">
+          <img src="img/v4b114/ui_sacoche_alt.png" alt="Sacoche">
+          <span id="bagLabel">0 / 18</span>
+        </div>
+
+        <button id="runNeedsBtn" class="commercial-needs-button run-needs-button hidden" type="button" aria-label="Voir les ressources nécessaires aux évolutions">
+          <span>Besoins</span>
+        </button>
+
+        <div class="toast" id="toast"></div>
+        <div class="commercial-pause-overlay hidden" id="runPauseOverlay">
+          <div class="commercial-pause-card">
+            <img src="img/v4b114/ui_chip_lantern.png" alt="">
+            <small>Balade en pause</small>
+            <strong>La forêt t’attend.</strong>
+            <button class="primary" id="runResumeBtn" type="button">Reprendre</button>
+            <button id="returnBtn" class="secondary commercial-pause-return" type="button">Retour au refuge</button>
+          </div>
+        </div>
+
+        <div id="runIntro" class="run-intro hidden">
+          <img id="runIntroImage" src="img/map.svg" alt="">
+          <p class="eyebrow" id="runIntroEyebrow">Nouvelle balade</p>
+          <h2 id="runIntroTitle">La Clairière mousseuse</h2>
+          <p id="runIntroText">Touche un endroit pour marcher. Approche-toi des trouvailles pour les ramasser.</p>
+          <button id="startRunBtn" class="primary">Marcher doucement</button>
+        </div>
+      </section>
+
+      <section class="screen" id="refugeScreen">
+        <div class="page-intro"><p class="eyebrow">Un feu, quelques amis</p><h1>Le refuge</h1><p>Exploration, récolte ou vie du camp : chaque amélioration change un petit morceau de tes balades.</p></div>
+        <div class="refuge-scene">
+          <img src="img/refuge.svg" alt="Refuge sous les étoiles">
+          <div><strong id="refugeLevel">Refuge niveau 1</strong><small id="gardenYield">Le jardin prépare des graines.</small></div>
+        </div>
+        <div id="upgradeList" class="upgrade-list"></div>
+      </section>
+
+
+      <section class="screen" id="tradeScreen">
+        <div class="page-intro"><p class="eyebrow">Après le Grand Fanal</p><h1>Le Troc</h1><p>Compose un paquet avec tes surplus, puis choisis une seule ressource à recevoir. Les ressources régionales restent dans leur propre circuit.</p></div>
+        <div id="tradeContent" class="trade-content"></div>
+      </section>
+
+
+      <section class="screen" id="echoesScreen">
+        <div class="page-intro"><p class="eyebrow">Une lumière répond</p><h1>Les Échos</h1><p>Appelle des compagnons, assemble leurs fragments et prépare ceux qui t’accompagneront pendant les balades.</p></div>
+        <div id="echoesContent" class="echoes-content"></div>
+      </section>
+
+      <section class="screen" id="gemShopScreen">
+        <div class="page-intro"><p class="eyebrow">Pour plus tard</p><h1>Boutique de Gemmes</h1><p>Les achats payants auront leur propre espace, séparé des appels de la Lanterne.</p></div>
+        <div id="gemShopContent" class="gem-shop-screen-content"></div>
+      </section>
+
+      <section class="screen" id="journalScreen">
+        <div class="page-intro"><p class="eyebrow">Tout ce qui mérite un dessin</p><h1>Le carnet</h1><p>Ressources, rencontres, régions et petites victoires.</p></div>
+        <div class="tabs" id="journalTabs">
+          <button class="active" data-tab="collections">Collections</button>
+          <button data-tab="creatures">Rencontres</button>
+          <button data-tab="badges">Badges</button>
+        </div>
+        <div id="journalContent"></div>
+      </section>
+
+      <section class="screen ending-screen" id="endingScreen" aria-label="Fin de Luciole de poche">
+        <div class="ending-backdrop" id="endingBackdrop"></div>
+        <div class="ending-vignette"></div>
+        <div class="ending-stage" aria-live="polite">
+          <img id="endingFrameA" class="ending-frame visible" src="finale/frame01.webp" alt="Les huit habitants regardent le feu d’artifice du Grand Fanal">
+          <img id="endingFrameB" class="ending-frame" src="finale/frame01.webp" alt="">
+        </div>
+        <div class="ending-controls">
+          <div class="ending-progress" id="endingProgress" aria-label="Huit feux d’artifice">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <p class="ending-caption">Huit chemins. Huit voix. Une lumière.</p>
+          <button id="endingReturnBtn" class="ending-return" aria-hidden="true">Retour à l’accueil</button>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" id="bottomNav">
+      <button class="active" data-screen="homeScreen"><img class="nav-icon" src="img/luciole.svg" alt="">Accueil</button>
+      <button data-screen="mapScreen"><img class="nav-icon" src="img/map.svg" alt="">Balades</button>
+      <button data-screen="refugeScreen"><img class="nav-icon" src="img/refuge.svg" alt="">Refuge</button>
+      <button data-screen="journalScreen"><img class="nav-icon" src="img/carnet.svg" alt="">Carnet</button>
+      <button class="hidden" id="echoNavBtn" data-screen="echoesScreen"><img class="nav-icon" src="img/echos.svg" alt="">Échos</button>
+    </nav>
+  </div>
+
+
+  <div class="companion-picker hidden" id="companionPicker"></div>
+  <div class="gacha-overlay hidden" id="gachaOverlay" aria-live="polite"></div>
+  <div class="fusion-overlay hidden" id="fusionOverlay" aria-live="polite"></div>
+
+  <div class="modal hidden" id="modal">
+    <div class="modal-card" id="modalCard"></div>
+  </div>
+
+  <div class="tutorial-layer hidden" id="tutorialLayer" aria-live="polite">
+    <div class="tutorial-spotlight" id="tutorialSpotlight"></div>
+    <div class="tutorial-coach" id="tutorialCoach" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
+      <p class="eyebrow" id="tutorialEyebrow">Tutoriel</p>
+      <h3 id="tutorialTitle"></h3>
+      <p id="tutorialText"></p>
+      <button class="tutorial-skip" id="tutorialSkipBtn" type="button">Passer</button>
+      <small class="tutorial-action-hint hidden" id="tutorialActionHint"></small>
+      <div class="tutorial-actions">
+        <button class="primary hidden" id="tutorialNextBtn" type="button">Continuer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/biome_art_v126.js"></script>
+  <script src="js/expedition.js"></script>
+  <script src="js/bindings.js"></script>
+  <script src="js/companions.js"></script>
+  <script src="js/isometric_v4_b126.js"></script>
+  <script src="js/commercial_hud_v4_b120.js"></script>
+  <script src="js/walk_render_mode_b133.js"></script>
+  <script src="js/tutorial.js"></script>
+  <script src="js/bootstrap.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+<defs>
+  <filter id="s"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#26372e" flood-opacity=".18"/></filter>
+  <radialGradient id="g"><stop offset="0" stop-color="#5d9fd3" stop-opacity=".20"/><stop offset="1" stop-color="#5d9fd3" stop-opacity="0"/></radialGradient>
+</defs>
+<circle cx="64" cy="66" r="57" fill="url(#g)"/>
+<circle cx="64" cy="64" r="57" fill="none" stroke="#5d9fd3" stroke-opacity=".38" stroke-width="1.5"/>
+<g filter="url(#s)">
+<ellipse cx="61" cy="90" rx="25" ry="20" fill="#d8a868"/>
+<circle cx="60" cy="57" r="19" fill="#d8a868"/>
+<path d="M43 49 L34 14 L55 39 Z M77 49 L86 14 L65 39 Z" fill="#e7c27b"/>
+<path d="M46 46 L41 23 L55 40 Z M74 46 L79 23 L65 40 Z" fill="#ffe99d"/>
+
+<circle cx="54" cy="56" r="3.2" fill="#27332f"/><circle cx="68" cy="56" r="3.2" fill="#27332f"/>
+<circle cx="53" cy="55" r="1" fill="#fff"/><circle cx="67" cy="55" r="1" fill="#fff"/>
+<path d="M57 65 Q60 68 63 65" stroke="#4e4d46" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+<path d="M81 92 q20 1 17 17 q-9 10 -18 -1" fill="none" stroke="#d8a868" stroke-width="7" stroke-linecap="round"/>
+<circle cx="94" cy="96" r="10" fill="#ffe98f" opacity=".25"/><circle cx="94" cy="96" r="5" fill="#fff0a5"/>
+</g>
+</svg>

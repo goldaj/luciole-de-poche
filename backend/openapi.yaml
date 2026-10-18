@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: Luciole de poche Purchase API
+  version: 1.0.0
+security:
+  - bearerAuth: []
+paths:
+  /v1/wallet:
+    get:
+      summary: Retourne le solde premium du joueur authentifié
+      responses:
+        '200':
+          description: Solde courant
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [balance]
+                properties:
+                  balance: { type: integer, minimum: 0 }
+  /v1/purchases/verify-and-grant:
+    post:
+      summary: Vérifie un achat Google Play et crédite une fois le portefeuille
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [purchaseToken, productId]
+              properties:
+                purchaseToken: { type: string, minLength: 16 }
+                productId: { type: string }
+      responses:
+        '200':
+          description: Achat vérifié, crédit idempotent
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [grantedGems, balance, grantId]
+                properties:
+                  grantedGems: { type: integer, minimum: 0 }
+                  balance: { type: integer, minimum: 0 }
+                  grantId: { type: string }
+  /v1/wallet/spend:
+    post:
+      summary: Débite des Gemmes premium de façon idempotente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [amount, idempotencyKey]
+              properties:
+                amount: { type: integer, minimum: 1 }
+                idempotencyKey: { type: string, minLength: 16 }
+      responses:
+        '200':
+          description: Dépense appliquée ou rejouée sans double débit
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [balance, spent, transactionId]
+                properties:
+                  balance: { type: integer, minimum: 0 }
+                  spent: { type: integer, minimum: 0 }
+                  transactionId: { type: string, minLength: 16 }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
