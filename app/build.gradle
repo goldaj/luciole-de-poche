@@ -88,3 +88,10 @@ android {
 dependencies {
     implementation 'com.android.billingclient:billing:9.1.0'
 }
+
+// Billing transitively references pre-1.8 Kotlin JDK facades. Keep them aligned
+// with kotlin-stdlib 1.8.22 to avoid duplicate classes during dex packaging.
+configurations.configureEach {
+    resolutionStrategy.force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22',
+                             'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22'
+}
