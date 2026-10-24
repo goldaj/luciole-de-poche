@@ -37,6 +37,9 @@ jobs:
       - name: Test QA runner errors
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
 
+      - name: Test partial save migration
+        run: node tests/save-migration.test.js
+
       - name: QA source
         run: python3 tools/qa.py
 
