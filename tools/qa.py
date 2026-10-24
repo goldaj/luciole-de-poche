@@ -48,7 +48,11 @@ def require(condition: bool, message: str) -> None:
 
 
 def run(command: list[str], *, cwd: Path = ROOT) -> None:
-    result = subprocess.run(command, cwd=cwd, text=True, capture_output=True)
+    try:
+        result = subprocess.run(command, cwd=cwd, text=True, capture_output=True)
+    except OSError as exc:
+        fail(f"Impossible d'exécuter {' '.join(command)} : {exc}")
+        return
     if result.returncode != 0:
         details = (result.stdout + result.stderr).strip()
         fail(f"Commande en échec: {' '.join(command)}\n{details}")
