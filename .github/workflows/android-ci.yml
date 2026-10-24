@@ -29,6 +29,9 @@ jobs:
         with:
           gradle-version: '8.13'
 
+      - name: Test QA runner errors
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+
       - name: QA source
         run: python3 tools/qa.py
 
