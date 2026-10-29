@@ -29,12 +29,29 @@ function defaultState() {
         tutorial: defaultTutorialState(), balanceV32: null, refugeFeatures: { tracker: false }, menuSeenNotices: {}, itemSeenNotices: {}, menuNoticesInitialized: false
     };
 }
+// Older saves may contain partially truncated nested structures. Keep valid
+// progress, rather than discarding the entire save when one field is malformed.
+function normalizePersistentSaveRoots(raw, defaults) {
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw))
+        return defaults;
+    ['resources', 'upgrades', 'settings', 'stats', 'characterKnowledge',
+        'fanalDeposits', 'refugeFeatures', 'menuSeenNotices', 'itemSeenNotices'].forEach(function (key) {
+        if (!raw[key] || typeof raw[key] !== 'object' || Array.isArray(raw[key]))
+            raw[key] = Object.assign({}, defaults[key] || {});
+    });
+    ['discoveredResources', 'discoveredCreatures', 'visitedRegions', 'regionLevels',
+        'badges', 'companionPermanent', 'companionDiscovered'].forEach(function (key) {
+        if (!Array.isArray(raw[key]))
+            raw[key] = (defaults[key] || []).slice();
+    });
+    return raw;
+}
 function loadState() {
     initializeSaveSlots();
     recoverSaveSlot(activeSaveSlot);
     try {
         var raw = localStorage.getItem(currentSaveKey());
-        state = raw ? JSON.parse(raw) : defaultState();
+        state = normalizePersistentSaveRoots(raw ? JSON.parse(raw) : defaultState(), defaultState());
         var hadTutorialState = !!(state.tutorial && typeof state.tutorial === 'object');
         var hadItemNoticeState = !!(state.itemSeenNotices && typeof state.itemSeenNotices === 'object');
         var priorVersion = state.version || 0, d = defaultState(), legacyLevels = state.upgrades ? Object.keys(state.upgrades).reduce(function (a, k) { return a + (state.upgrades[k] || 0); }, 0) : 0;
